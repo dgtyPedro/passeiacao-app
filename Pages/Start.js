@@ -1,5 +1,6 @@
 import React from "react";
-import {NativeBaseProvider, Box, VStack, Text, Button, Center} from "native-base";
+import {NativeBaseProvider, Box, VStack, Text, Button, Center, HStack} from "native-base";
+import {Image} from "react-native";
 
 export default function Start({ navigation }) {
     return (
@@ -8,7 +9,16 @@ export default function Start({ navigation }) {
                 <VStack alignItems="center" justifyContent={"center"} flex={1}>
                 </VStack>
                 <VStack alignItems="center" justifyContent={"center"} flex={1} paddingX={"20%"}>
-                    <Text fontSize={30} fontWeight={"bold"}>Passeia<Text color={"#FF0000"}>cão</Text></Text>
+                    <HStack alignItems="center" justifyContent={"center"}>
+                        <Text fontSize={30} fontWeight={"bold"}>Passeia<Text color={"#FF0000"}>cão</Text></Text>
+                        <Image
+                            style={{
+                                width: 50,
+                                resizeMode: 'contain',
+                            }}
+                            source={require('../assets/img_1.png')}
+                        />
+                    </HStack>
                     <Text fontSize={15} textAlign={"center"} fontWeight={"bold"}>O seu app para passeios exclusivos para o
                         seu cão!</Text>
                 </VStack>
@@ -23,7 +33,8 @@ export default function Start({ navigation }) {
                                 textAlign: "center"
                             }}
                     >
-                        <Text color={"#FF0000"} fontSize={25} fontWeight={"bold"}>Iniciar</Text></Button>
+                        <Text color={"#FF0000"} fontSize={25} fontWeight={"bold"}>Iniciar</Text>
+                    </Button>
                 </VStack>
             </VStack>
         </NativeBaseProvider>
