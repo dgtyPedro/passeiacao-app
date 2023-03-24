@@ -27,7 +27,7 @@ export default function Start({ navigation }) {
                             width={"100%"}
                             style={{
                                 backgroundColor: "#D9D9D9",
-                                borderRadius: "30px",
+                                borderRadius: 30,
                                 color: "#FF0000",
                                 height: 80,
                                 textAlign: "center"

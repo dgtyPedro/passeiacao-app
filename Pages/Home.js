@@ -1,8 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {NativeBaseProvider, Box, VStack, Text, Button, Input, Link, HStack, Select, CheckIcon} from "native-base";
-import {Keyboard, TouchableWithoutFeedback, View, StyleSheet, Image} from "react-native";
+import {Keyboard, TouchableWithoutFeedback, View, StyleSheet, Image, Alert} from "react-native";
 
-export default function Home() {
+export default function Home({navigation}) {
+
+    useEffect(() => {
+        Alert.alert('Bem vindo Pedro Caires!', 'Número de passeios de hoje: 0', [
+            {text: 'Continuar', onPress: () => console.log('OK Pressed')},
+        ]);
+    }, [])
     return (
         <NativeBaseProvider safeArea>
             <VStack alignItems="center" justifyContent={"center"} flex={1} safeArea>
@@ -24,6 +30,7 @@ export default function Home() {
                             width: "100%",
                             resizeMode: 'cover',
                             height: "30%",
+                            backgroundColor: '#e1e4e8',
                         }}
                         source={require('../assets/img.png')}
                     />
@@ -48,7 +55,7 @@ export default function Home() {
                                     width={"80%"}
                                     style={{
                                         backgroundColor: "#FA5050",
-                                        borderRadius: "30px",
+                                        borderRadius: 30,
                                         color: "white",
                                         height: 80,
                                         textAlign: "center",
