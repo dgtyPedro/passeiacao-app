@@ -9,6 +9,8 @@ import Register from "./Pages/Register";
 import Home from "./Pages/Home";
 import Start from "./Pages/Start";
 import Calendar from "./Pages/Calendar";
+import ClientCalendar from "./Pages/ClientCalendar";
+import Schedule from "./Pages/Schedule";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -21,6 +23,8 @@ export default function App() {
                 <Stack.Screen name="Login" component={Login}/>
                 <Stack.Screen name="Register" component={Register}/>
                 <Stack.Screen name="Calendar" component={Calendar}/>
+                <Stack.Screen name="ClientCalendar" component={ClientCalendar}/>
+                <Stack.Screen name="Schedule" component={Schedule}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

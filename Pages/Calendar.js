@@ -28,6 +28,8 @@ export default function Calendar({navigation}) {
 
     const [showModal4, setShowModal4] = useState(false);
 
+    const [status, setStatus] = useState(0)
+
     const [dates, setDates] = useState(null);
 
     useEffect(() => {
@@ -36,7 +38,6 @@ export default function Calendar({navigation}) {
         const end = new Date(new Date().setMonth(new Date().getMonth() + 1));
         var day = start;
         while (day <= end) {
-            console.log(day.toLocaleString())
             newDate.push({
                 month: (day.getMonth() + 1).toString().length === 1 ? `0${day.getMonth() + 1}` : day.getMonth() + 1,
                 day: (day.getDate() + 1).toString().length === 1 ? `0${day.getDate() + 1}` : day.getDate() + 1,
@@ -47,10 +48,6 @@ export default function Calendar({navigation}) {
         setDates(newDate)
     }, [])
 
-    useEffect(() => {
-        console.log(showModal)
-    }, [showModal])
-
     return (
         <NativeBaseProvider safeArea>
             <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
@@ -58,16 +55,15 @@ export default function Calendar({navigation}) {
                     <Modal.CloseButton/>
                     <Modal.Header>Sobre o Passeio</Modal.Header>
                     <Modal.Body>
-                        <Text>Passeio com o João as 15:00</Text>
-                        <Text>Endereço: Rua das lágrimas</Text>
+                        <Link href={'https://wa.me/5511980666371'}>
+                            <Text>Telefone do Cliente: 11 986341150</Text>
+                        </Link>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button.Group space={2}>
                             <Button onPress={() => {
                                 setShowModal(false);
-                            }}
-                                    background={"#333333"}
-                            >
+                            }} background={"#333333"}>
                                 OK
                             </Button>
                         </Button.Group>
@@ -79,8 +75,7 @@ export default function Calendar({navigation}) {
                     <Modal.CloseButton/>
                     <Modal.Header>Deseja aceitar o passeio?</Modal.Header>
                     <Modal.Body>
-                        <Text>Passeio com o João as 15:00</Text>
-                        <Text>Endereço: Rua das lágrimas</Text>
+                        <Text>Cliente: Pedro Gabriel</Text>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button.Group space={2}>
@@ -91,6 +86,7 @@ export default function Calendar({navigation}) {
                             </Button>
                             <Button onPress={() => {
                                 setShowModal2(false);
+                                setStatus(1)
                             }}
                                     background={"#333333"}
                             >
@@ -105,8 +101,7 @@ export default function Calendar({navigation}) {
                     <Modal.CloseButton/>
                     <Modal.Header>Deseja recusar o passeio?</Modal.Header>
                     <Modal.Body>
-                        <Text>Passeio com o João as 15:00</Text>
-                        <Text>Endereço: Rua das lágrimas</Text>
+                        <Text>Cliente: Pedro Gabriel</Text>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button.Group space={2}>
@@ -135,72 +130,114 @@ export default function Calendar({navigation}) {
             <VStack alignItems="center" justifyContent={"center"} flex={1} safeArea background={"#333333"}>
                 <HStack flex={1} width={"100%"} alignItems={"center"} justifyContent={"space-between"} paddingX={5}
                         style={{borderBottomWidth: 1, borderBottomColor: '#FF8066'}}>
-                    <Text bold onPress={() => navigation.goBack()} color={"#FF8066"}>Voltar</Text>
+                    <Text bold onPress={() => navigation.goBack()} color={"#FF8066"}>Sair</Text>
                 </HStack>
                 <VStack flex={12} width={"100%"}>
                     <ScrollView>
-                        {
-                            dates?.map((date, index) => {
-                                if (index % 3 === 0) {
-                                    return (
-                                        <HStack width={"100%"} alignItems={"center"} justifyContent={"space-between"}
-                                                paddingRight={5}
-                                                paddingLeft={2}
-                                                paddingY={2}
-                                                style={{borderBottomWidth: 1, borderBottomColor: 'white'}}>
-                                            <Pressable onPress={() => {
-                                                setShowModal(true);
-                                            }}>
-                                                <HStack style={{width: '50%'}} alignItems={"center"} space={3}>
-                                                    <Text color={"white"} bold
-                                                          fontSize={"3xl"}>{`${date.day}/${date.month}`}</Text>
-                                                    <Text color={"white"} style={{width: '100%', flexWrap: 'wrap'}}>22:00
-                                                        ➡️ Passeio com João222222222</Text>
-                                                </HStack>
-                                            </Pressable>
-                                            <HStack alignItems={"center"} borderRadius={20} paddingX={2}>
-                                                <Pressable onPress={() => {
-                                                    setShowModal4(true);
-                                                }}>
-                                                    <AntDesign name="like1" size={24} color="#FF8066"/>
-                                                </Pressable>
-                                            </HStack>
-                                        </HStack>
-                                    )
-                                }
-                                return (
-                                    <HStack width={"100%"} alignItems={"center"} justifyContent={"space-between"}
-                                            paddingRight={5}
-                                            paddingLeft={2}
-                                            paddingY={2}
-                                            style={{borderBottomWidth: 1, borderBottomColor: 'white'}}>
+
+                        <HStack width={"100%"} alignItems={"center"} justifyContent={"space-between"}
+                                paddingRight={5}
+                                paddingLeft={2}
+                                paddingY={2}
+                                style={{borderBottomWidth: 1, borderBottomColor: 'white'}}>
+                            <Pressable onPress={() => {
+                                setShowModal(true);
+                            }}>
+                                <HStack style={{width: '50%'}} alignItems={"center"} space={3}>
+                                    <Text color={"white"} bold
+                                          fontSize={"3xl"}>22/05</Text>
+                                    <Text color={"white"} style={{width: '100%', flexWrap: 'wrap'}}>10:15 ➡️
+                                        Passeio com Pedro Gabriel</Text>
+                                </HStack>
+                            </Pressable>
+                            {
+                                status === 1 ? <HStack alignItems={"center"} borderRadius={20} paddingX={2}>
+                                    <Pressable onPress={() => {
+                                        setShowModal4(true);
+                                    }}>
+                                        <AntDesign name="like1" size={24} color="#FF8066"/>
+                                    </Pressable>
+                                </HStack> :
+                                    <HStack alignItems={"center"} background={"white"} borderRadius={20}
+                                            paddingX={2}>
                                         <Pressable onPress={() => {
-                                            setShowModal(true);
+                                            setShowModal2(true);
                                         }}>
-                                            <HStack style={{width: '50%'}} alignItems={"center"} space={3}>
-                                                <Text color={"white"} bold
-                                                      fontSize={"3xl"}>{`${date.day}/${date.month}`}</Text>
-                                                <Text color={"white"} style={{width: '100%', flexWrap: 'wrap'}}>22:00 ➡️
-                                                    Passeio com João222222222</Text>
-                                            </HStack>
+                                            <Ionicons name="ios-checkmark-circle" size={36} color="#333333"/>
                                         </Pressable>
-                                        <HStack alignItems={"center"} background={"white"} borderRadius={20}
-                                                paddingX={2}>
-                                            <Pressable onPress={() => {
-                                                setShowModal2(true);
-                                            }}>
-                                                <Ionicons name="ios-checkmark-circle" size={36} color="#333333"/>
-                                            </Pressable>
-                                            <Pressable onPress={() => {
-                                                setShowModal3(true);
-                                            }}>
-                                                <Entypo name="circle-with-cross" size={36} color="#DB0012"/>
-                                            </Pressable>
-                                        </HStack>
+                                        <Pressable onPress={() => {
+                                            setShowModal3(true);
+                                        }}>
+                                            <Entypo name="circle-with-cross" size={36} color="#DB0012"/>
+                                        </Pressable>
                                     </HStack>
-                                )
-                            })
-                        }
+                            }
+                        </HStack>
+
+                        {/*{*/}
+                        {/*    dates?.map((date, index) => {*/}
+                        {/*        if (index % 3 === 0) {*/}
+                        {/*            return (*/}
+                        {/*                <HStack width={"100%"} alignItems={"center"} justifyContent={"space-between"}*/}
+                        {/*                        paddingRight={5}*/}
+                        {/*                        paddingLeft={2}*/}
+                        {/*                        paddingY={2}*/}
+                        {/*                        key={index}*/}
+                        {/*                        style={{borderBottomWidth: 1, borderBottomColor: 'white'}}>*/}
+                        {/*                    <Pressable onPress={() => {*/}
+                        {/*                        setShowModal(true);*/}
+                        {/*                    }}>*/}
+                        {/*                        <HStack style={{width: '50%'}} alignItems={"center"} space={3}>*/}
+                        {/*                            <Text color={"white"} bold*/}
+                        {/*                                  fontSize={"3xl"}>{`${date.day}/${date.month}`}</Text>*/}
+                        {/*                            <Text color={"white"} style={{width: '100%', flexWrap: 'wrap'}}>22:00*/}
+                        {/*                                ➡️ Passeio com João222222222</Text>*/}
+                        {/*                        </HStack>*/}
+                        {/*                    </Pressable>*/}
+                        {/*                    <HStack alignItems={"center"} borderRadius={20} paddingX={2}>*/}
+                        {/*                        <Pressable onPress={() => {*/}
+                        {/*                            setShowModal4(true);*/}
+                        {/*                        }}>*/}
+                        {/*                            <AntDesign name="like1" size={24} color="#FF8066"/>*/}
+                        {/*                        </Pressable>*/}
+                        {/*                    </HStack>*/}
+                        {/*                </HStack>*/}
+                        {/*            )*/}
+                        {/*        }*/}
+                        {/*        return (*/}
+                        {/*            <HStack width={"100%"} alignItems={"center"} justifyContent={"space-between"}*/}
+                        {/*                    paddingRight={5}*/}
+                        {/*                    paddingLeft={2}*/}
+                        {/*                    paddingY={2}*/}
+                        {/*                    key={index}*/}
+                        {/*                    style={{borderBottomWidth: 1, borderBottomColor: 'white'}}>*/}
+                        {/*                <Pressable onPress={() => {*/}
+                        {/*                    setShowModal(true);*/}
+                        {/*                }}>*/}
+                        {/*                    <HStack style={{width: '50%'}} alignItems={"center"} space={3}>*/}
+                        {/*                        <Text color={"white"} bold*/}
+                        {/*                              fontSize={"3xl"}>{`${date.day}/${date.month}`}</Text>*/}
+                        {/*                        <Text color={"white"} style={{width: '100%', flexWrap: 'wrap'}}>22:00 ➡️*/}
+                        {/*                            Passeio com João222222222</Text>*/}
+                        {/*                    </HStack>*/}
+                        {/*                </Pressable>*/}
+                        {/*                <HStack alignItems={"center"} background={"white"} borderRadius={20}*/}
+                        {/*                        paddingX={2}>*/}
+                        {/*                    <Pressable onPress={() => {*/}
+                        {/*                        setShowModal2(true);*/}
+                        {/*                    }}>*/}
+                        {/*                        <Ionicons name="ios-checkmark-circle" size={36} color="#333333"/>*/}
+                        {/*                    </Pressable>*/}
+                        {/*                    <Pressable onPress={() => {*/}
+                        {/*                        setShowModal3(true);*/}
+                        {/*                    }}>*/}
+                        {/*                        <Entypo name="circle-with-cross" size={36} color="#DB0012"/>*/}
+                        {/*                    </Pressable>*/}
+                        {/*                </HStack>*/}
+                        {/*            </HStack>*/}
+                        {/*        )*/}
+                        {/*    })*/}
+                        {/*}*/}
                     </ScrollView>
                 </VStack>
             </VStack>
